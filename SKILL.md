@@ -2,7 +2,7 @@
 name: paper-scout
 version: 0.1.0
 description: >-
-  Find and verify real research papers through a keyless research index — no login, no API key. Use for any literature task: find a paper by name or by method, map a field's related work through its citation graph, pull the in-body passages that prove a specific claim, or search GitHub issues/PRs/READMEs for engineering prior art. Triggers include "find the paper that", "papers on X", "related work for", "what does X cite or compare against", "has anyone published on", "verify this citation", "is this claim real", "prior art for", "build a reading list on", "catch me up on <field>". Grounds every answer in papers the index actually returns — never invents titles or arXiv IDs. Not for general web search, news, or writing the paper for you; this finds, expands, and verifies the literature.
+  Find and verify real research papers through a keyless research index — no login or API key from a normal IP. Use for any literature task: find a paper by name or by method, map a field's related work through its citation graph, pull the in-body passages that prove a specific claim, or search GitHub issues/PRs/READMEs for engineering prior art. Triggers include "find the paper that", "papers on X", "related work for", "what does X cite or compare against", "has anyone published on", "verify this citation", "is this claim real", "prior art for", "build a reading list on", "catch me up on <field>". Grounds every answer in papers the index actually returns — never invents titles or arXiv IDs. Not for general web search, news, or writing the paper for you; this finds, expands, and verifies the literature.
 homepage: https://solidstate.cc/skills/paper-scout
 metadata:
   openclaw:
@@ -27,7 +27,7 @@ Paper Scout finds the work that answers a research question, then proves it.
 
 It searches a keyless index of millions of arXiv papers, plus GitHub artifacts.
 
-No login. No API key. The index answers raw HTTP for free.
+No login. The index answers raw HTTP for free. A clean IP needs no key — a datacenter or agent IP may.
 
 Cite the literature. Not the vibe.
 
@@ -41,7 +41,7 @@ python3 {baseDir}/scripts/scout.py selftest
 
 That makes one keyless call and prints the paper it found. If it answers, you're done setting up. There is nothing to log into.
 
-A free key lifts the limits, never gates them — see Notes.
+A free key lifts the limits — and clears the block if your IP is flagged. See Notes.
 
 ## The five moves, and what each is for
 
@@ -127,8 +127,8 @@ Two honest failure modes, both handled.
 
 ## Notes
 
-- **Keyless by default.** The index is capped per IP per day. Plenty for interactive work.
-- **Free key, higher ceiling.** Set `FIRECRAWL_API_KEY` (free signup, no card) and the script adds it automatically for higher limits. Optional, never required.
+- **Keyless from a normal IP.** Capped per IP per day — plenty for interactive work. From a datacenter or agent IP the index may 403 and ask for a key.
+- **Free key.** Set `FIRECRAWL_API_KEY` (free signup, no card) and the script adds it automatically — it lifts the per-IP ceiling and clears the 403 on a flagged IP.
 - **`read` runs longer.** The body endpoint is slower, so `read` waits up to 90s. Raise `PAPER_SCOUT_TIMEOUT` to change every call's limit.
 - **Backend-agnostic on purpose.** The script talks to the index over plain HTTP. So it doesn't depend on any vendor's MCP tools shipping. If `firecrawl_research_*` MCP tools appear in a session, prefer them; the method is identical.
 - **Provenance.** Data: Firecrawl's keyless research index. Skill, method, engine, and voice: Solid State. Credit upstream, improve downstream.
