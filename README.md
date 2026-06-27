@@ -2,7 +2,7 @@
 
 **Agents hallucinate citations. This one reads the papers first.**
 
-A keyless research-paper finder and verifier. No login, no API key. It finds the work that answers a research question, then proves it by reading the actual papers. It never invents a title or an arXiv ID.
+A keyless research-paper finder and verifier. No login or API key from a normal IP. It finds the work that answers a research question, then proves it by reading the actual papers. It never invents a title or an arXiv ID.
 
 One file. Stdlib Python. No dependencies.
 
@@ -12,7 +12,7 @@ One file. Stdlib Python. No dependencies.
 
 ## Quick start
 
-No setup, no key, no account.
+No setup from a normal IP — just run it. On a datacenter or agent host, set the free `FIRECRAWL_API_KEY` (no card).
 
 ```bash
 python3 scripts/scout.py selftest
@@ -22,7 +22,7 @@ python3 scripts/scout.py selftest
 OK — keyless index answered. sample: Attention Is All You Need (https://arxiv.org/abs/1706.03762)  [no key]
 ```
 
-If it answers, you're done. A free `FIRECRAWL_API_KEY` lifts the per-IP rate limit but is never required.
+If it answers, you're done. A free `FIRECRAWL_API_KEY` lifts the per-IP rate limit — and on a flagged datacenter or agent IP, the index asks for it.
 
 This repo is an agent skill: point your agent at `SKILL.md`, or run `scripts/scout.py` directly.
 
@@ -79,11 +79,11 @@ Every move takes `--json` for piping into the next step.
 
 ## Configuration
 
-The research index answers over plain HTTP with no login and no key, capped per IP per day. The script talks to it directly, so it never depends on a vendor's MCP tools shipping.
+The research index answers over plain HTTP with no login, capped per IP per day. A clean IP needs no key; a datacenter or agent IP can get a 403 and need the free one. The script talks to it directly, so it never depends on a vendor's MCP tools shipping.
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `FIRECRAWL_API_KEY` | unset | Optional. Lifts the per-IP rate limit. Never gates anything. |
+| `FIRECRAWL_API_KEY` | unset | Lifts the per-IP rate limit; clears the 403 on a flagged datacenter/agent IP. |
 | `PAPER_SCOUT_TIMEOUT` | `30` (90 for `read`) | Request timeout, in seconds. |
 | `PAPER_SCOUT_BASE` | Firecrawl research index | Override the backend endpoint. |
 
